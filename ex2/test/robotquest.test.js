@@ -9,7 +9,7 @@ test('robot should have its head turned to the right when head is up and directi
         head: 'up'
     };
 
-    let nbOfTurn = featuresToTest.turn(robot, 'right', 1);
+    let nbOfTurn = featuresToTest.turn(robot, 'turn-right', 1);
     expect(nbOfTurn).toBe(2);
     expect(robot.head).toBe('right');
 });

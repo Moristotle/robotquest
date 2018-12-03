@@ -18,22 +18,59 @@ const trailIndicators = {
 };
 
 
+// here
 function turn(robot, step, turns) {
-    turns += 1;
-    return turns;
+    if (robot.head === "left" && step === "turn-left"){
+        robot.head = "down"
+        nbOfTurns = 1
+
+    }
+
+    return 1
+
 }
 
 function move(robot, maxLineIndex, maxColumnIndex, nbOfMoves) {
+    let line = robot.position.line;
+    let column = robot.position.column;
+
+    switch (robot.head) {
+        case 'up':
+            line = Math.min(maxLineIndex, line + 1);
+            break;
+        case 'down':
+            line = Math.max(0, line - 1);
+            break;
+        case 'left':
+            column = Math.max(0, column - 1);
+            break;
+        case 'right':
+            column = Math.min(maxColumnIndex, column + 1);
+            break;
+    }
+
+    robot.position.line = line;
+    robot.position.column = column;
+
     nbOfMoves += 1;
     return nbOfMoves;
 }
 
 function updateBoard(board, previousRobotState, currentRobotState) {
-    return;
+    let previousLine = previousRobotState.position.line;
+    let currentLine = currentRobotState.position.line;
+    let previousColumn = previousRobotState.position.column;
+    let currentColumn = currentRobotState.position.column;
+
+    board[previousLine][previousColumn] = trailIndicators[previousRobotState.head];
+    board[currentLine][currentColumn] = SYMBOLS.robot;
 }
 
 function checkIfFlagReached(robot, board) {
-    return false;
+    const cell = board[robot.position.line][robot.position.column];
+    let flagReached = cell === SYMBOLS.flag || cell == 'F';
+
+    return flagReached;
 }
 
 // utils
